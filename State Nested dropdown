@@ -1,0 +1,77 @@
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <select id="state-dropdown">
+        <option value="">Select City</option>
+        <option value="jakhal-road-patran">Jakhal Road- Patran</option>
+        <option value="mohali">Mohali</option>
+        <option value="patiala">Patiala</option>
+        <option value="peermushalla">Peermushalla</option>
+        <option value="zirakpur">Zirakpur</option>
+    </select>
+    <select id="city-dropdown" >
+        <option value="">Select Project</option>
+    </select>
+    <button id="navigate-button"><i class="fa fa-search" aria-hidden="true"></i></button>
+
+    <script>
+        $(document).ready(function () {
+            var cities = {
+                "jakhal-road-patran": {
+                    "Victoria Enclave (Dirba)": "/property/victoria-enclave-dirba/",
+                    "Victoria Enclave (Patran)": "/property/victoria-enclave-patran/",
+                    "Victoria Enclave (Moonak)": "/property/victoria-enclave-moonak/",
+                },
+                "mohali": {
+                    "Time Square": "/property/london-square-banur-landran-road-mohali/",
+                    "London Square": "/property/london-square-banur-landran-road-mohali/",
+                    "The Lutyens": "/property/the-lutyens-banur-landran-road-mohali/",
+                },
+                "patiala": {
+                    "Calfornia Estate": "/property/calfornia-estate-bhadson-road-patiala/",
+                    "London Street": "/property/london-street-patiala-rajpura-road-patiala/",
+                },
+                "peermushalla": {
+                    "Metro Tower": "/property/metro-tower-peermushalla/",
+                },
+                "zirakpur": {
+                    "Metro Plaza Citi Market": "/property/metro-plaza-citi-market-lohgarh-road-zirakpur/",
+                    "Metro Kings Court": "/property/metro-kings-court-patiala-zirakpur-highway-zirakpur/",
+                    "Metro Aristo 56": "/property/metro-aristo-56-vip-road-zirakpur/",
+                    "Metro Trade Centre": "/property/metro-trade-centre-vip-road-zirakpur/",
+                    
+                },
+            };
+
+            $("#state-dropdown").change(function () {
+                var selectedState = $(this).val();
+                var $cityDropdown = $("#city-dropdown");
+                $cityDropdown.empty().append("<option value=''>Select City</option>");
+
+                if (selectedState !== "") {
+                    for (var city in cities[selectedState]) {
+                        $cityDropdown.append("<option value='" + city + "'>" + city.replace(/-/g, ' ') + "</option>");
+                    }
+                    $cityDropdown.show();
+                } else {
+                    $cityDropdown.show();
+                }
+            });
+
+            $("#navigate-button").click(function () {
+                var selectedState = $("#state-dropdown").val();
+                var selectedCity = $("#city-dropdown").val();
+
+                if (selectedState && selectedCity) {
+                    var link = cities[selectedState][selectedCity];
+                    if (link) {
+                        window.location.href = link;
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
